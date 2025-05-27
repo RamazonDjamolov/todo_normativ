@@ -1,0 +1,19 @@
+    task1
+
+API — bu Application Programming Interface ning qisqartmasi. O‘zbek tilida “Dasturiy ta’minot interfeysi” deb atash mumkin.
+
+Oddiy qilib aytganda, API — bu turli dasturlar yoki tizimlar o‘zaro muloqot qilishlari uchun qoidalar va usullar to‘plami. API yordamida bitta dastur boshqa dasturga ma’lumot yuborishi, u yerdan ma’lumot olishi, funksiyalarni chaqirishi mumkin.
+
+
+
+task2
+REST — bu veb-servislar (API) yaratish uchun ishlatiladigan arxitektura uslubi. Ya’ni, qanday qilib ma’lumotlarni URL, HTTP metodlari (GET, POST, PUT, DELETE) orqali yuborish, olish va o‘chirish kerakligini belgilovchi tamoyillar to‘plami.
+DRF — bu Django uchun yaratilgan REST API framework. U sizga REST arxitekturasiga asoslangan API larni tez va qulay yaratishga yordam beradi.
+
+
+
+
+
+
+Normativ 2
+
