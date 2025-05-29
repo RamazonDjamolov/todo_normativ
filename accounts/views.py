@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, status
 from rest_framework.mixins import ListModelMixin
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
@@ -35,3 +35,4 @@ class ListUsersView(GenericViewSet, ListModelMixin):
     queryset = User.objects.all()
     model = User
     serializer_class = ListUserSerializer
+    permission_classes = (IsAuthenticated,IsAdminUser)

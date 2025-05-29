@@ -1,24 +1,30 @@
-from accounts import serializers
-from task_manager.models import Project
+from rest_framework import serializers
+
+from accounts.models import User
+from task_manager.models import Project, Task
 
 
-class CreateProjectSerializer(serializers.ModelSerializer):
+class ProjectListModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id','name', 'description', 'owner')
-
-        extra_kwargs = {
-            "id": {"read_only": True},
-        }
+        fields = ['id', 'name', 'description', 'owner', 'members']
 
 
-class ListProjectSerializer(serializers.ModelSerializer):
+class ProjectCreateModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'name', 'description', 'owner', 'members')
+        fields = ['name', 'members', 'description',  ]
 
 
-class UpdateProjectSerializer(serializers.ModelSerializer):
+class ProjectUpdateModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'name', 'description', 'owner', 'members')
+        fields = ['name', 'members', 'description',  ]
+
+
+class ProjectAddMembers(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ['members']
+
+
