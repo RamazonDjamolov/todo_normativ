@@ -14,16 +14,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from asyncio import tasks
+
 from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 from .views import TestAPIView
+
 router = DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls  ,  )),
-    path('test/', TestAPIView.as_view()),
+
+    path('api/v1/', include([
+        path('accounts/', include('accounts.urls')),
+        path('tasks/', include('task_manager.urls')),
+
+    ])),
 
 ]

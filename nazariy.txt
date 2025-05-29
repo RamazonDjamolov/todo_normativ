@@ -16,4 +16,8 @@ DRF — bu Django uchun yaratilgan REST API framework. U sizga REST arxitekturas
 
 
 Normativ 2
+serializer -
+fields larni, validatsiyani, create() va update() metodlarini o‘zingiz yozishingiz kerak.
 
+
+ModelSerializer —  model asosida yaratiladigan serializer Maydonlarni, create() va update() metodlarini avtomatik yaratadi.
