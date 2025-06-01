@@ -1,12 +1,18 @@
+from celery.app import task
+
+from config import celery_app
+from celery.result import AsyncResult
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 from task_manager.models import Project
 from task_manager.permissions import IsOwner
 from task_manager.serializers import ProjectCreateModelSerializer, ProjectUpdateModelSerializer, ProjectAddMembers, \
-    ProjectListModelSerializer
+    ProjectListModelSerializer, TestCelerySerializer
+from task_manager.tasks import add
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -59,3 +65,22 @@ class ProjectViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+
+class TestCeleryViewSet(GenericViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = TestCelerySerializer
+
+    @action(methods=['get'], detail=False, )
+    def run_task(self, request):
+        task = add.delay(12, 15)
+        return Response({'task_id': task.id})
+
+    @action(methods=['post'], detail=False, )
+    def done_task(self, request):
+        serializer = TestCelerySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        result = AsyncResult(serializer.validated_data['id'], app=celery_app)
+        if result.ready():
+            return Response({'result': result.result})
+        return Response({'result': "processing"})

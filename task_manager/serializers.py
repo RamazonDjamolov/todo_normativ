@@ -28,3 +28,9 @@ class ProjectAddMembers(serializers.ModelSerializer):
         fields = ['members']
 
 
+
+class TestCelerySerializer(serializers.Serializer):
+    id = serializers.CharField(max_length=200)
+
+
+

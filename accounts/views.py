@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status
 from rest_framework.mixins import ListModelMixin
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -13,7 +15,14 @@ from accounts.serializers import UserSerializer, ListUserSerializer
 # Create your views here.
 
 class RegisterApiview(APIView):
-
+    @swagger_auto_schema(
+        request_body=UserSerializer,
+        responses={
+            200: openapi.Response(
+                'Success', UserSerializer
+            )
+        }
+    )
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
