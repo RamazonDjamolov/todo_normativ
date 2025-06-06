@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from accounts.models import User
+
+# Register your mode
+#
+# ls here.
+
+admin.site.register(User)

@@ -44,4 +44,4 @@ class ListUsersView(GenericViewSet, ListModelMixin):
     queryset = User.objects.all()
     model = User
     serializer_class = ListUserSerializer
-    permission_classes = (IsAuthenticated,IsAdminUser)
+    permission_classes = (IsAuthenticated, IsAdminUser)

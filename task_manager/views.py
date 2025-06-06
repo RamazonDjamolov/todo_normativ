@@ -18,7 +18,7 @@ from task_manager.tasks import add
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectListModelSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         if self.action == 'list' or self.action == 'retrieve':
@@ -40,7 +40,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == 'list':
             return [IsAuthenticated()]
-        elif self.action == 'project_add_members':
+        if self.action == 'project_add_members':
             return [IsAuthenticated(), IsOwner()]
         return super().get_permissions()
 
@@ -58,7 +58,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @action(methods=['put'], detail=True, serializer_class=ProjectAddMembers,
-            permission_classes=[IsAuthenticated, IsOwner])
+            permission_classes=[IsOwner, IsAuthenticated])
     def project_add_members(self, request, pk=None):
         project = self.get_object()
         serializer = ProjectAddMembers(data=request.data, instance=project, partial=True)
